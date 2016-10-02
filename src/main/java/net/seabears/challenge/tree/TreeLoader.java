@@ -2,6 +2,7 @@ package net.seabears.challenge.tree;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -16,9 +17,18 @@ public class TreeLoader {
     private final Map<String, Node> nodes;
     private Node root;
 
-    private static List<String> fileLines(String file) {
+    private static File openFile(String file) {
+        URL url = TreeLoader.class.getClassLoader().getResource(file);
+        if (url != null) {
+            return new File(url.getFile());
+        } else {
+            return new File(file);
+        }
+    }
+
+    private static List<String> fileLines(File file) {
         try {
-            return Files.readAllLines(new File(file).toPath(), Charset.defaultCharset());
+            return Files.readAllLines(file.toPath(), Charset.defaultCharset());
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
@@ -30,7 +40,7 @@ public class TreeLoader {
      * @param csv path to CSV file
      */
     public TreeLoader(String csv) {
-        this(fileLines(csv));
+        this(fileLines(openFile(csv)));
     }
 
     /**

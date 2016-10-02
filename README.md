@@ -2,7 +2,7 @@
 
 A tree of connections between humans and businesses (or other types).
 
-This is my work for one take-home programming challenge for a job interview. I replaced some files that I did not create.
+This is my work for one take-home programming challenge for a job interview. I replaced some files that I did not create originally.
 
 ## Usage
 

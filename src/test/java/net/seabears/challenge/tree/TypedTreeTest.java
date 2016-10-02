@@ -9,46 +9,55 @@ import java.util.Collections;
 import static org.junit.Assert.assertEquals;
 
 public class TypedTreeTest {
+    private static final String DEFAULT_FILE = "tree.csv";
+
     private static final String EOL = System.lineSeparator();
 
     @Test
     public void testDisplay() {
-        TypedTree tree = new TypedTree();
+        TypedTree tree = new TypedTree(DEFAULT_FILE);
         String expected = "# Parent -> Child ChildType" + EOL +
                 "A->B ALL" + EOL +
-                "A->C ALL" + EOL +
-                "A->D HUMAN" + EOL +
-                "B->B1 HUMAN" + EOL +
-                "B1->B11 ALL" + EOL +
-                "B11->B111 BUSINESS" + EOL +
-                "C->C1 BUSINESS" + EOL +
-                "C1->C11 BUSINESS" + EOL +
-                "C1->C12 BUSINESS" + EOL +
-                "C12->C121 ALL" + EOL +
-                "C12->C122 HUMAN" + EOL +
-                "D->D1 HUMAN" + EOL +
-                "D1->D11 HUMAN" + EOL +
-                "D1->D12 BUSINESS" + EOL +
-                "D12->D121 ALL";
+                "A->C BUSINESS" + EOL +
+                "B->D ALL" + EOL +
+                "B->E ALL" + EOL +
+                "B->F HUMAN" + EOL +
+                "D->I ALL" + EOL +
+                "I->Q HUMAN" + EOL +
+                "I->R ALL" + EOL +
+                "E->J BUSINESS" + EOL +
+                "E->K HUMAN" + EOL +
+                "J->S ALL" + EOL +
+                "K->T BUSINESS" + EOL +
+                "K->U ALL" + EOL +
+                "F->L HUMAN" + EOL +
+                "L->V HUMAN" + EOL +
+                "L->W HUMAN" + EOL +
+                "C->G HUMAN" + EOL +
+                "C->H BUSINESS" + EOL +
+                "G->M HUMAN" + EOL +
+                "H->N BUSINESS" + EOL +
+                "H->O BUSINESS" + EOL +
+                "H->P ALL";
         assertEquals(expected, tree.displayTree());
     }
 
     @Test
     public void testFilterAny() {
-        TypedTree tree = new TypedTree();
-        assertEquals(Arrays.asList("A", "B", "B1", "B11", "B111", "C", "C1", "C11", "C12", "C121", "C122", "D", "D1", "D11", "D12", "D121"), tree.getFilteredComponents(Type.ALL));
+        TypedTree tree = new TypedTree(DEFAULT_FILE);
+        assertEquals(Arrays.asList("A", "B", "D", "I", "Q", "R", "E", "J", "S", "K", "T", "U", "F", "L", "V", "W", "C", "G", "M", "H", "N", "O", "P"), tree.getFilteredComponents(Type.ALL));
     }
 
     @Test
-    public void testFilterCompany() {
-        TypedTree tree = new TypedTree();
-        assertEquals(Arrays.asList("A", "B", "C", "C1", "C11", "C12", "C121"), tree.getFilteredComponents(Type.BUSINESS));
+    public void testFilterBusiness() {
+        TypedTree tree = new TypedTree(DEFAULT_FILE);
+        assertEquals(Arrays.asList("A", "B", "D", "I", "R", "E", "J", "S", "C", "H", "N", "O", "P"), tree.getFilteredComponents(Type.BUSINESS));
     }
 
     @Test
-    public void testFilterPerson() {
-        TypedTree tree = new TypedTree();
-        assertEquals(Arrays.asList("A", "B", "B1", "B11", "C", "D", "D1", "D11"), tree.getFilteredComponents(Type.HUMAN));
+    public void testFilterHuman() {
+        TypedTree tree = new TypedTree(DEFAULT_FILE);
+        assertEquals(Arrays.asList("A", "B", "D", "I", "Q", "R", "E", "K", "U", "F", "L", "V", "W"), tree.getFilteredComponents(Type.HUMAN));
     }
 
     @Test
