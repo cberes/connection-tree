@@ -1,0 +1,19 @@
+plugins {
+    id 'java' // Must be explicitly applied
+    id 'application'
+}
+
+description = 'Connection tree'
+version = '1.0.0'
+
+mainClassName = 'net.seabears.challenge.tree.Application'
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    // test dependencies
+    testCompile 'junit:junit:4.12'
+}
